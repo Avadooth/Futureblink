@@ -30,6 +30,9 @@ const createUser = async (req, res, next) => {
   }
 };
 
+// MONGO_URI=mongodb+srv://Avadooth2919:Avadooth%402919@cluster0.7p6ib.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+// PORT=5000
+
 
 
 export default { createUser };
