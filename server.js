@@ -1,27 +1,15 @@
-import mongoose from "mongoose";
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import userController from "./Controller/UserController.js";
-
-const app = express();
-
-app.use(cors());
-app.use(express.json());
+import express from 'express';
+import bodyParser from 'body-parser';
+import slackRoutes from './routes/slack.js';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch((error) => console.error("MongoDB connection error:", error));
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-app.get("/", (req, res) => {
-  res.send("hello world ");
-});
+app.use('/slack', slackRoutes);
 
-app.post("/users", userController.createUser);
-
-app.listen(process.env.PORT, () => {
-  console.log(`App listening Port ${process.env.PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Slack bot running on port ${PORT}`));
